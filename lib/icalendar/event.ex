@@ -21,7 +21,8 @@ defmodule ICalendar.Event do
             modified: nil,
             organizer: nil,
             sequence: nil,
-            attendees: []
+            attendees: [],
+            alarms: []
 end
 
 defimpl ICalendar.Serialize, for: ICalendar.Event do
@@ -54,6 +55,11 @@ defimpl ICalendar.Serialize, for: ICalendar.Event do
         exdates
         |> Enum.map(&KV.build("EXDATE", &1))
     end
+  end
+
+  defp to_kv({:alarms, []}), do: ""
+  defp to_kv({:alarms, alarms}) do
+    Enum.map(alarms, &ICalendar.Serialize.to_ics/1)
   end
 
   defp to_kv({key, value}) do
