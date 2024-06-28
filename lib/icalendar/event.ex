@@ -22,7 +22,8 @@ defmodule ICalendar.Event do
             organizer: nil,
             sequence: nil,
             attendees: [],
-            alarms: []
+            alarms: [],
+            dtstamp: DateTime.utc_now()
 end
 
 defimpl ICalendar.Serialize, for: ICalendar.Event do
